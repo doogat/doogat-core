@@ -3,7 +3,9 @@ name: Build & maybe upload PyPI package
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'v*'
     tags: ["*"]
   release:
     types:

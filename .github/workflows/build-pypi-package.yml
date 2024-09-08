@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-    tags: ["*"]
   release:
     types:
       - published
@@ -29,7 +28,7 @@ jobs:
         with:
           attest-build-provenance-github: "false"
 
-  # Upload to Test PyPI on every commit on main.
+  # Upload to Test PyPI on every commit to main branch.
   release-test-pypi:
     name: Publish in-dev package to test.pypi.org
     environment: release-test-pypi

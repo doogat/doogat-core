@@ -8,6 +8,10 @@ on:
     tags: ["*"]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   build-package:
     name: Build & verify package

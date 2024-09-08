@@ -12,7 +12,6 @@ on:
   workflow_dispatch:
 
 permissions:
-  attestations: write
   contents: read
   id-token: write
 
@@ -28,7 +27,7 @@ jobs:
 
       - uses: hynek/build-and-inspect-python-package@v2
         with:
-          attest-build-provenance-github: "true"
+          attest-build-provenance-github: "false"
 
   # Upload to Test PyPI on every commit on main.
   release-test-pypi:

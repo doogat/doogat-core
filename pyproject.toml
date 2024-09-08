@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "doogat-core"
-version = "0.1.1"
+version = "0.1.2a1"
 description = ""
 authors = ["Tomáš Bouška <admin@doogat.com>"]
 license = "GNU GPLv3"

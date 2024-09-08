@@ -13,7 +13,13 @@ packages = [
 python = "^3.12"
 inflection = "^0.5.1"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+pre-commit = "^3.8.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["S101"]

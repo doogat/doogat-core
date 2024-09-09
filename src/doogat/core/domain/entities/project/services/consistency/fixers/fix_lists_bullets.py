@@ -7,6 +7,17 @@ if TYPE_CHECKING:
 
 
 def fix_lists_bullets(zettel_data: ZettelData) -> None:
+    """
+    Replaces asterisk (*) bullets with hyphen (-) bullets in the content of ZettelData sections.
+
+    :param zettel_data: The input ZettelData object whose sections need to be processed.
+    :type zettel_data: ZettelData
+
+    :return: None (modifies the input zettel_data object in-place)
+
+    :note: This function assumes that the input ZettelData object has a 'sections' attribute,
+           which is a list of tuples containing section metadata and content.
+    """
     fixed_sections = []
     for section in zettel_data.sections:
         section_content_reformatted = []

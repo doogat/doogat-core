@@ -11,16 +11,19 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.12"
-inflection = "^0.5.1"
-buvis-pybase = "^0.1.2"
+buvis-pybase = "0.1.2"
 # buvis-pybase = {version = "*", source = "test-pypi"}
 # buvis-pybase = {path = "../../buvis/buvis-pybase", develop = true}
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.2"
-pre-commit = "^3.8.0"
-sphinx = "^8.0.2"
-sphinx-material = "^0.0.36"
+pre-commit = "3.8.0"
+
+[tool.poetry.group.test.dependencies]
+pytest = "8.3.2"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = "8.0.2"
+sphinx-rtd-theme = "3.0.0rc1"
 
 [build-system]
 requires = ["poetry-core"]

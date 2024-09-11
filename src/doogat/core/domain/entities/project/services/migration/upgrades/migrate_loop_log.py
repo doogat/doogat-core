@@ -18,11 +18,17 @@ def migrate_loop_log(zettel_data: ZettelData) -> None:
     task_status = " "
     for item in log_items:
         entry_date = item[0]
-        log_content = (
-            log_content
-            + f"- [{task_status}] {entry_date.strftime("%Y-%m-%d %H:%M")} - {item[1]} => {item[2]}\n"
-        )
-        task_status = "x"
+        if not item[2]:
+            log_content = (
+                log_content
+                + f"- [i] {entry_date.strftime("%Y-%m-%d %H:%M")} - {item[1]}\n"
+            )
+        else:
+            log_content = (
+                log_content
+                + f"- [{task_status}] {entry_date.strftime("%Y-%m-%d %H:%M")} - {item[1]} => {item[2]}\n"
+            )
+            task_status = "x"
     zettel_data.sections[0] = (h1, "\n".join(filtered_top_level_content))
 
     if log_content:
@@ -30,19 +36,28 @@ def migrate_loop_log(zettel_data: ZettelData) -> None:
 
 
 def extract_log(content: str) -> tuple[list[tuple[datetime, str, str]], list[str]]:
-    pattern: str = r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) - (.+) => (.+)"
+    pattern_with_action: str = r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) - (.+) => (.+)"
+    pattern_without_action: str = r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) - (.+)"
     matches: list[tuple[datetime, str, str]] = []
     unmatched_lines: list[str] = []
 
     for line in content.split("\n"):
-        match = re.match(pattern, line.strip())
-        if match:
-            datetime_str, text_before, text_after = match.groups()
+        match_with_action = re.match(pattern_with_action, line.strip())
+        match_without_action = re.match(pattern_without_action, line.strip())
+        if match_with_action:
+            datetime_str, text_before, text_after = match_with_action.groups()
             datetime_obj = datetime.strptime(
                 datetime_str,
                 "%d.%m.%Y %H:%M",
             ).astimezone()
             matches.append((datetime_obj, text_before.strip(), text_after.strip()))
+        elif match_without_action:
+            datetime_str, text_before = match_without_action.groups()
+            datetime_obj = datetime.strptime(
+                datetime_str,
+                "%d.%m.%Y %H:%M",
+            ).astimezone()
+            matches.append((datetime_obj, text_before.strip(), ""))
         elif line.strip():
             unmatched_lines.append(line.strip())
 

@@ -8,6 +8,9 @@ if TYPE_CHECKING:
 from doogat.core.domain.entities.zettel.services.consistency.zettel_consistency_service import (
     ZettelConsistencyService,
 )
+from doogat.core.domain.entities.zettel.services.migration.zettel_migration_service import (
+    ZettelMigrationService,
+)
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
 
@@ -23,8 +26,12 @@ class Zettel:
 
     def replace_data(self: Zettel, zettel_data: ZettelData) -> None:
         self._data = zettel_data
+        self._migrate()
         self._ensure_consistency()
         self._alias_attributes()
+
+    def _migrate(self: Zettel) -> None:
+        ZettelMigrationService.migrate(self._data)
 
     def _ensure_consistency(self: Zettel) -> None:
         ZettelConsistencyService.ensure_consistency(self._data)
@@ -51,6 +58,7 @@ class Zettel:
             self._data.metadata["id"] = int(value)
         except ValueError as err:
             raise ValueError from err
+        self._migrate()
         self._ensure_consistency()
 
     @property
@@ -63,6 +71,7 @@ class Zettel:
     @title.setter
     def title(self: Zettel, value: str) -> None:
         self._data.metadata["title"] = str(value)
+        self._migrate()
         self._ensure_consistency()
 
     @property
@@ -75,6 +84,7 @@ class Zettel:
     @date.setter
     def date(self: Zettel, value: datetime) -> None:
         self._data.metadata["date"] = value
+        self._migrate()
         self._ensure_consistency()
 
     @property
@@ -87,6 +97,7 @@ class Zettel:
     @type.setter
     def type(self: Zettel, value: str) -> None:
         self._data.metadata["type"] = str(value)
+        self._migrate()
         self._ensure_consistency()
 
     @property
@@ -101,6 +112,7 @@ class Zettel:
             value = [value]
 
         self._data.metadata["tags"] = value
+        self._migrate()
         self._ensure_consistency()
 
     @property
@@ -115,6 +127,7 @@ class Zettel:
             self._data.metadata["publish"] = True
         else:
             self._data.metadata["publish"] = False
+        self._migrate()
         self._ensure_consistency()
 
     @property
@@ -129,4 +142,5 @@ class Zettel:
             self._data.metadata["processed"] = True
         else:
             self._data.metadata["processed"] = False
+        self._migrate()
         self._ensure_consistency()

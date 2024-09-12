@@ -1,8 +1,9 @@
 """
-Module providing services for maintaining consistency in project zettels.
+This module provides services for ensuring consistency in project zettels.
 
-This module contains the `ProjectZettelConsistencyService` class, which offers
-methods to ensure consistency in zettel data.
+It includes functions to fix list bullet formatting and normalize the order of sections
+within a zettel. These functionalities are encapsulated in the ProjectZettelConsistencyService
+class, which operates on instances of :class:`ZettelData`.
 """
 
 from doogat.core.domain.entities.project.services.consistency.fixers.fix_lists_bullets import (
@@ -16,22 +17,23 @@ from doogat.core.domain.value_objects.zettel_data import ZettelData
 
 class ProjectZettelConsistencyService:
     """
-    Service class responsible for maintaining consistency in project zettels.
+    Provides services to ensure consistency in project zettels.
 
-    This class provides static methods to perform various consistency checks and
-    fixes on zettel data.
+    This class offers a static method to apply necessary consistency fixes to zettels,
+    specifically targeting list bullet formatting and section order normalization.
     """
 
     @staticmethod
     def ensure_consistency(zettel_data: ZettelData) -> None:
         """
-        Ensure consistency in the given zettel data.
+        Ensure the consistency of the given zettel data by applying various fixes.
 
-        This method applies multiple consistency fixes to the provided zettel data,
-        including fixing list bullets and normalizing section order.
+        This method modifies the provided :class:`ZettelData` instance in place by
+        fixing the list bullets and normalizing the order of sections within the zettel.
 
-        :param zettel_data: The :class:`ZettelData` object to ensure consistency for.
-        :return: None
+        :param zettel_data: The zettel data to be made consistent.
+        :type zettel_data: :class:`ZettelData`
+        :return: None. The function modifies the `zettel_data` in place.
         """
         fix_lists_bullets(zettel_data)
         normalize_sections_order(zettel_data)

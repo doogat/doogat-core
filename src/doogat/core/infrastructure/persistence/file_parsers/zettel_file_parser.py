@@ -1,5 +1,6 @@
 """
 This module defines the ZettelFileParser class and associated helper functions for parsing zettel files.
+
 It includes functionality to extract metadata from filenames and file content using specific patterns and external utilities.
 """
 

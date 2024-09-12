@@ -1,3 +1,10 @@
+"""
+This module defines the ReadDoogatUseCase class.
+
+It includes functionality to read zettel from ZettelRepository and returning it as
+a specific doogat accourding to zettel type.
+"""
+
 import doogat.core.domain.entities as doogat_entities
 from doogat.core.domain.interfaces.zettel_repository import ZettelRepository
 from doogat.core.domain.interfaces.zettel_repository_exceptions import (
@@ -26,7 +33,6 @@ class ReadDoogatUseCase:
                           which will be used to retrieve the data.
         :type repository: ZettelRepository
         """
-
         self.repository = repository
 
     def execute(

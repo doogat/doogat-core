@@ -1,3 +1,9 @@
+"""
+This module provides functionality to migrate log entries from zettel data sections into a structured log format.
+
+It includes functions to parse log entries from text content and update the zettel data structure accordingly.
+"""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
@@ -5,60 +11,70 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from doogat.core.domain.value_objects.zettel_data import ZettelData
 
-
 import re
 from datetime import datetime
 
 
 def migrate_loop_log(zettel_data: ZettelData) -> None:
-    h1, top_level_content = zettel_data.sections[0]
+    """
+    Migrate log entries from the first section of the zettel data to a new log section.
 
-    log_items, filtered_top_level_content = extract_log(top_level_content)
-    log_content = ""
-    task_status = " "
-    for item in log_items:
-        entry_date = item[0]
-        if not item[2]:
-            log_content = (
-                log_content
-                + f"- [i] {entry_date.strftime("%Y-%m-%d %H:%M")} - {item[1]}\n"
-            )
-        else:
-            log_content = (
-                log_content
-                + f"- [{task_status}] {entry_date.strftime("%Y-%m-%d %H:%M")} - {item[1]} => {item[2]}\n"
-            )
-            task_status = "x"
-    zettel_data.sections[0] = (h1, "\n".join(filtered_top_level_content))
+    :param zettel_data: The zettel data to be processed.
+    :type zettel_data: :class:`ZettelData`
+    :return: None. The function modifies the `zettel_data` in place.
+    """
+    header, content = zettel_data.sections[0]
+    log_entries, remaining_content = extract_log_entries(content)
+    formatted_log = format_log_entries(log_entries)
 
-    if log_content:
-        zettel_data.sections.append(("## Log", log_content))
+    zettel_data.sections[0] = (header, "\n".join(remaining_content))
+    if formatted_log:
+        zettel_data.sections.append(("## Log", formatted_log))
 
 
-def extract_log(content: str) -> tuple[list[tuple[datetime, str, str]], list[str]]:
-    pattern_with_action: str = r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) - (.+) => (.+)"
-    pattern_without_action: str = r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) - (.+)"
-    matches: list[tuple[datetime, str, str]] = []
-    unmatched_lines: list[str] = []
+def extract_log_entries(
+    content: str,
+) -> tuple[list[tuple[datetime, str, str]], list[str]]:
+    """
+    Extract log entries from the provided content string.
+
+    :param content: The content from which to extract log entries.
+    :type content: str
+    :return: A tuple containing a list of log entries and a list of unmatched lines.
+    :rtype: tuple[list[tuple[datetime, str, str]], list[str]]
+    """
+    log_pattern = r"(\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}) - (.*?)(?: => (.*))?$"
+    matches = []
+    unmatched_lines = []
 
     for line in content.split("\n"):
-        match_with_action = re.match(pattern_with_action, line.strip())
-        match_without_action = re.match(pattern_without_action, line.strip())
-        if match_with_action:
-            datetime_str, text_before, text_after = match_with_action.groups()
-            datetime_obj = datetime.strptime(
-                datetime_str,
-                "%d.%m.%Y %H:%M",
-            ).astimezone()
-            matches.append((datetime_obj, text_before.strip(), text_after.strip()))
-        elif match_without_action:
-            datetime_str, text_before = match_without_action.groups()
-            datetime_obj = datetime.strptime(
-                datetime_str,
-                "%d.%m.%Y %H:%M",
-            ).astimezone()
-            matches.append((datetime_obj, text_before.strip(), ""))
-        elif line.strip():
-            unmatched_lines.append(line.strip())
+        match = re.match(log_pattern, line.strip())
+        if match:
+            date_str, before, after = match.groups()
+            date_obj = datetime.strptime(date_str, "%d.%m.%Y %H:%M").astimezone()
+            matches.append((date_obj, before.strip(), after.strip() if after else ""))
+        else:
+            if line.strip():
+                unmatched_lines.append(line.strip())
 
     return matches, unmatched_lines
+
+
+def format_log_entries(log_entries: list[tuple[datetime, str, str]]) -> str:
+    """
+    Format log entries into a structured log string.
+
+    :param log_entries: List of log entries.
+    :type log_entries: list[tuple[datetime, str, str]]
+    :return: Formatted log string.
+    :rtype: str
+    """
+    log_content = ""
+    task_status = " "
+    for date, before, after in log_entries:
+        if not after:
+            log_content += f"- [i] {date.strftime('%Y-%m-%d %H:%M')} - {before}\n"
+        else:
+            log_content += f"- [{task_status}] {date.strftime('%Y-%m-%d %H:%M')} - {before} => {after}\n"
+            task_status = "x"
+    return log_content

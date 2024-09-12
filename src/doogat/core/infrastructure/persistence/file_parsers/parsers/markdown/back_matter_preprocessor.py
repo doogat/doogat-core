@@ -18,7 +18,7 @@ class ZettelParserMarkdownBackMatterPreprocessor:
 
         corrected_lines = [
             re.sub(dataview_key_pattern, replace, line, count=1)
-            for line in text.split("/n")
+            for line in text.split("\n")
         ]
         return "\n".join(corrected_lines)
 
@@ -29,7 +29,11 @@ class ZettelParserMarkdownBackMatterPreprocessor:
 
         for line in lines:
             if ":" in line:
-                key, value = line.split(": ", 1)
+                try:
+                    key, value = line.split(": ", 1)
+                except ValueError:
+                    key = line.split(":", 1)[0]
+                    value = ""
                 if (
                     (":" in value or "[" in value or "]" in value)
                     and not value.startswith('"')

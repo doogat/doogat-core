@@ -45,7 +45,7 @@ def extract_reference(content: str) -> tuple:
         raise ValueError(msg) from e
 
     content_without_reference = re.sub(
-        r"\n---\s*(.*)\s*$",
+        r"(^---$)[\s\S]*",
         "",
         content,
         flags=re.MULTILINE,

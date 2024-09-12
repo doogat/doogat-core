@@ -69,7 +69,15 @@ def format_metadata(metadata: dict, first_keys: tuple) -> str:
 
 
 def format_reference(reference: dict) -> str:
-    return "\n".join(f"{k}:: {v.lstrip()}" for k, v in reference.items())
+    formatted_reference = ""
+    for key, value in reference.items():
+        if value:
+            formatted_reference = (
+                formatted_reference + f"{key}:: {str(value).lstrip()}\n"
+            )
+        else:
+            formatted_reference = formatted_reference + f"{key}::\n"
+    return formatted_reference.rstrip()
 
 
 def format_sections(sections: list) -> str:

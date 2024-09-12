@@ -49,7 +49,7 @@ class ReadDoogatUseCase:
         :type repository_location: str
         :raises ZettelRepositoryZettelNotFoundError: If the zettel is not found in the repository.
         :return: A Doogat object created from the retrieved zettel.
-        :rtype: doogat.core.domain.entities.Zettel or its subclass
+        :rtype: Zettel or its subclass
         """
         try:
             zettel = self.repository.find_by_location(repository_location)

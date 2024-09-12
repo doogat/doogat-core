@@ -27,7 +27,7 @@ class ReadDoogatUseCase:
 
     def __init__(self: "ReadDoogatUseCase", repository: ZettelRepository) -> None:
         """
-        Initializes a new instance of the ReadDoogatUseCase class.
+        Initialize a new instance of the ReadDoogatUseCase class.
 
         :param reposiroty: An instance of a class that implements the ZettelRepository interface,
                           which will be used to retrieve the data.
@@ -40,7 +40,7 @@ class ReadDoogatUseCase:
         repository_location: str,
     ) -> doogat_entities.Zettel:
         """
-        Executes the use case of reading from repository by location and downcasting to doogat.
+        Execute the use case of reading from repository by location and downcasting to doogat.
 
         This method takes repository location, attempts to retrieve the corresponding zettel from the repository,
         downcasts it into a doogat, and returns it. It handles potential exceptions during the retrieval process.
@@ -54,9 +54,7 @@ class ReadDoogatUseCase:
         try:
             zettel = self.repository.find_by_location(repository_location)
         except ZettelRepositoryZettelNotFoundError as e:
-            raise ZettelRepositoryZettelNotFoundError(
-                e
-            ) from ZettelRepositoryZettelNotFoundError
+            raise e
         if zettel is None:
             raise ZettelRepositoryZettelNotFoundError
         return DoogatFactory.create(zettel)

@@ -29,5 +29,15 @@ sphinx-rtd-theme = "3.0.0rc1"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff.lint]
+extend-select = ["B", "Q", "D"]
+# ignore = ["D100", "D101", "D102","D103", "D205", "D211", "D213", "D401"]
+ignore = ["D211", "D213"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
 [tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["D104"]
 "tests/*.py" = ["S101"]
+"**/{tests,docs,tools}/*" = ["D"]

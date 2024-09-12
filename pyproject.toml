@@ -31,8 +31,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.ruff.lint]
 extend-select = ["B", "Q", "D"]
-# ignore = ["D100", "D101", "D102","D103", "D205", "D211", "D213", "D401"]
-ignore = ["D211", "D213"]
+ignore = ["D100", "D101", "D102","D103", "D107", "D205", "D211", "D213", "D401"]
+# ignore = ["D211", "D213"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"

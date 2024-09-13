@@ -1,18 +1,30 @@
+"""
+This module provides functionality to set default titles for ZettelData objects.
+
+Imports:
+    - :class:`ZettelData` from doogat.core.domain.value_objects.zettel_data
+"""
+
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
-DEFAULT_TITLE = "Unknown title"
+DEFAULT_TITLE: str = "Unknown title"
 
 
 def set_default_title(zettel_data: ZettelData) -> None:
-    if (
-        zettel_data.metadata.get("title", None) is None
-        and getattr(zettel_data, "sections", None) is not None
-    ):
-        first_heading, _ = zettel_data.sections[0]
+    """
+    Set a default title for the given ZettelData object if no title is present.
 
+    If the ZettelData object has sections and the first section starts with '# ',
+    it sets the title to the text following this marker. If no title is found,
+    it sets the title to a default value.
+
+    :param zettel_data: The ZettelData object to modify
+    :type zettel_data: :class:`ZettelData`
+    :return: None. The function modifies the `zettel_data` in place.
+    """
+    if zettel_data.metadata.get("title") is None:
+        first_heading = zettel_data.sections[0][0] if zettel_data.sections else ""
         if first_heading.startswith("# "):
             zettel_data.metadata["title"] = first_heading[2:]
-
-    # Fallback to default title
-    if zettel_data.metadata.get("title", None) is None:
-        zettel_data.metadata["title"] = DEFAULT_TITLE
+        else:
+            zettel_data.metadata["title"] = DEFAULT_TITLE

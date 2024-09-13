@@ -4,9 +4,6 @@ from doogat.core.domain.entities.zettel.services.consistency.fixers.align_h1_to_
 from doogat.core.domain.entities.zettel.services.consistency.fixers.fix_title_format import (
     fix_title_format,
 )
-from doogat.core.domain.entities.zettel.services.consistency.fixers.normalize_type import (
-    normalize_type,
-)
 from doogat.core.domain.entities.zettel.services.consistency.fixers.remove_duplicate_tags import (
     remove_duplicate_tags,
 )
@@ -63,7 +60,6 @@ class ZettelConsistencyService:
 
     @staticmethod
     def ensure_consistency(zettel_data: ZettelData) -> None:
-        normalize_type(zettel_data)
         ZettelConsistencyService.set_missing_defaults(zettel_data)
         remove_duplicate_tags(zettel_data)
         sort_tags(zettel_data)

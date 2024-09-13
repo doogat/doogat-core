@@ -1,3 +1,11 @@
+"""
+This module provides services for ensuring consistency in Zettel data entities.
+
+Imports:
+    - Various fixer functions from doogat.core.domain.entities.zettel.services.consistency.fixers
+    - :class:`ZettelData` from doogat.core.domain.value_objects.zettel_data
+"""
+
 from doogat.core.domain.entities.zettel.services.consistency.fixers.align_h1_to_title import (
     align_h1_to_title,
 )
@@ -35,31 +43,43 @@ from doogat.core.domain.value_objects.zettel_data import ZettelData
 
 
 class ZettelConsistencyService:
+    """
+    Provides services to ensure the consistency of :class:`ZettelData` entities.
+
+    This class includes methods to set missing default values and ensure overall data consistency.
+    """
+
     @staticmethod
     def set_missing_defaults(zettel_data: ZettelData) -> None:
-        if zettel_data.metadata.get("date", None) is None:
-            set_default_date(zettel_data)
+        """
+        Set default values for missing metadata fields in :class:`ZettelData`.
 
-        if zettel_data.metadata.get("id", None) is None:
-            set_default_id(zettel_data)
-
-        if zettel_data.metadata.get("title", None) is None:
-            set_default_title(zettel_data)
-
-        if zettel_data.metadata.get("type", None) is None:
-            set_default_type(zettel_data)
-
-        if zettel_data.metadata.get("tags", None) is None:
-            set_default_tags(zettel_data)
-
-        if zettel_data.metadata.get("publish", None) is None:
-            set_default_publish(zettel_data)
-
-        if zettel_data.metadata.get("processed", None) is None:
-            set_default_processed(zettel_data)
+        :param zettel_data: The Zettel data to modify
+        :type zettel_data: :class:`ZettelData`
+        :return: None. The function modifies the `zettel_data` in place.
+        """
+        defaults = {
+            "date": set_default_date,
+            "id": set_default_id,
+            "title": set_default_title,
+            "type": set_default_type,
+            "tags": set_default_tags,
+            "publish": set_default_publish,
+            "processed": set_default_processed,
+        }
+        for key, func in defaults.items():
+            if zettel_data.metadata.get(key, None) is None:
+                func(zettel_data)
 
     @staticmethod
     def ensure_consistency(zettel_data: ZettelData) -> None:
+        """
+        Ensure the consistency of :class:`ZettelData`.
+
+        :param zettel_data: The Zettel data to check and modify
+        :type zettel_data: :class:`ZettelData`
+        :return: None. The function modifies the `zettel_data` in place.
+        """
         ZettelConsistencyService.set_missing_defaults(zettel_data)
         remove_duplicate_tags(zettel_data)
         sort_tags(zettel_data)

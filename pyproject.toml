@@ -16,7 +16,7 @@ buvis-pybase = "0.1.3"
 # buvis-pybase = {path = "../../buvis/buvis-pybase", develop = true}
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "4.0.0"
+pre-commit = "4.0.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "8.3.3"

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "doogat-core"
-version = "0.1.3-alpha.10"
+version = "0.1.3-alpha.11"
 description = ""
 authors = ["Tomáš Bouška <admin@doogat.com>"]
 license = "GNU GPLv3"
@@ -12,7 +12,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.12"
 # buvis-pybase = "0.1.3"
-buvis-pybase = {version = "0.1.4a8", source = "test-pypi"}
+buvis-pybase = {version = "0.1.4a9", source = "test-pypi"}
 # buvis-pybase = {path = "../../buvis/buvis-pybase", develop = true}
 
 [tool.poetry.group.dev.dependencies]

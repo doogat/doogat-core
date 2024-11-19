@@ -104,6 +104,39 @@ def format_reference(reference: dict) -> str:
     return formatted_reference.rstrip()
 
 
+def convert_markdown_to_preserve_line_breaks(text):
+    r"""
+    Convert multiline markdown text to preserve line breaks.
+
+    This function adds two spaces at the end of each non-empty line in the
+    input text to force line breaks in markdown, while preserving empty lines.
+
+    :param text: The input markdown text to be converted
+    :type text: str
+    :return: The converted markdown text with preserved line breaks
+    :rtype: str
+
+    :Example:
+
+    >>> text = "Line one.\\nLine two.\\n\\nLine three."
+    >>> print(convert_markdown_to_preserve_line_breaks(text))
+    Line one.
+    Line two.
+
+    Line three.
+    """
+    lines = text.split("\n")  # Split the text into lines
+    converted_lines = []
+
+    for line in lines:
+        if line.strip():  # Check if the line is not empty
+            converted_lines.append(line + "  ")
+        else:
+            converted_lines.append(line)  # Preserve empty lines
+
+    return "\n".join(converted_lines)  # Join the lines back into a single string
+
+
 def format_sections(sections: list) -> str:
     """Format sections list into a string with headings and content.
 
@@ -113,6 +146,8 @@ def format_sections(sections: list) -> str:
     :rtype: str
     """
     return "\n".join(
-        f"\n{heading}\n\n{content.strip()}" if content.strip() else f"\n{heading}"
+        f"\n{heading}\n\n{convert_markdown_to_preserve_line_breaks(content.strip())}"
+        if content.strip()
+        else f"\n{heading}"
         for heading, content in sections
     )

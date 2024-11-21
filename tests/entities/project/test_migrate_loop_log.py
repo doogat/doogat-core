@@ -37,11 +37,11 @@ def test_extract_log_entries():
 def test_format_log_entries():
     log_entries = [
         (datetime(2024, 1, 1, 12, 0), "Entry without action", ""),
-        (datetime(2024, 1, 2, 13, 0), "Entry with action", "Completed"),
+        (datetime(2024, 1, 2, 13, 0), "Entry with action", "something to do"),
     ]
     expected_output = (
         "- [i] 2024-01-01 12:00 - Entry without action\n"
-        "- [ ] 2024-01-02 13:00 - Entry with action => Completed\n"
+        "- [ ] 2024-01-02 13:00 - #gtd/action/now Entry with action => something to do | 🔼\n"
     )
 
     result = format_log_entries(log_entries)

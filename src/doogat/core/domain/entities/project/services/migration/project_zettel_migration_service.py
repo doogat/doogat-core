@@ -9,6 +9,9 @@ Imports:
 from doogat.core.domain.entities.project.services.migration.upgrades.migrate_loop_log import (
     migrate_loop_log,
 )
+from doogat.core.domain.entities.project.services.migration.upgrades.migrate_parent_reference import (
+    migrate_parent_reference,
+)
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
 
@@ -31,3 +34,4 @@ class ProjectZettelMigrationService:
         :rtype: None
         """
         migrate_loop_log(zettel_data)
+        migrate_parent_reference(zettel_data)

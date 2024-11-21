@@ -12,6 +12,9 @@ from doogat.core.domain.entities.project.services.consistency.fixers.fix_lists_b
 from doogat.core.domain.entities.project.services.consistency.fixers.normalize_sections_order import (
     normalize_sections_order,
 )
+from doogat.core.domain.entities.project.services.consistency.fixers.set_default_completed import (
+    set_default_completed,
+)
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
 
@@ -37,3 +40,4 @@ class ProjectZettelConsistencyService:
         """
         fix_lists_bullets(zettel_data)
         normalize_sections_order(zettel_data)
+        set_default_completed(zettel_data)

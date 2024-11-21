@@ -25,7 +25,8 @@ def migrate_loop_log(zettel_data: ZettelData) -> None:
     """
     header, content = zettel_data.sections[0]
     log_entries, remaining_content = extract_log_entries(content)
-    formatted_log = format_log_entries(log_entries)
+    gtd_list, priority = determine_priority(zettel_data)
+    formatted_log = format_log_entries(log_entries, gtd_list, priority)
 
     zettel_data.sections[0] = (header, "\n".join(remaining_content))
     if formatted_log:
@@ -60,21 +61,84 @@ def extract_log_entries(
     return matches, unmatched_lines
 
 
-def format_log_entries(log_entries: list[tuple[datetime, str, str]]) -> str:
+def determine_priority(zettel_data: ZettelData) -> tuple:
+    """
+    Determine priority from project metadata.
+
+    :param zettel_data: The zettel data to be processed.
+    :type zettel_data: :class:`ZettelData`
+    :return: A tuple containing GTD list and priority.
+    :rtype: tuple[str, str]
+    """
+    gtd_list = "#gtd/act/now"
+    match zettel_data.metadata:
+        case {"could-do": target_date}:
+            gtd_list = f"#gtd/act/{determine_gtd_list_from_target_date(target_date)}"
+            priority = "⏬"
+            del zettel_data.metadata["could-do"]
+        case {"would-do": target_date}:
+            gtd_list = f"#gtd/act/{determine_gtd_list_from_target_date(target_date)}"
+            priority = "🔽"
+            del zettel_data.metadata["would-do"]
+        case {"should-do": target_date}:
+            gtd_list = f"#gtd/act/{determine_gtd_list_from_target_date(target_date)}"
+            priority = "🔼"
+            del zettel_data.metadata["should-do"]
+        case {"must-do": target_date}:
+            gtd_list = f"#gtd/act/{determine_gtd_list_from_target_date(target_date)}"
+            priority = "⏫"
+            del zettel_data.metadata["must-do"]
+        case _:
+            gtd_list = "#gtd/inbox"
+            priority = "🔼"
+
+    return (gtd_list, priority)
+
+
+def determine_gtd_list_from_target_date(target_date: str) -> str:
+    """
+    Determine GTD list from target date.
+
+    :param target_date: Date or word describing point in time.
+    :type target_date: str
+    :return: Name of corresponding GTD list.
+    :rtype: str
+    """
+    match target_date:
+        case _:
+            return target_date
+
+
+def format_log_entries(
+    log_entries: list[tuple[datetime, str, str]],
+    *,
+    gtd_list: str = "#gtd/action/now",
+    priority: str = "🔼",
+) -> str:
     """
     Format log entries into a structured log string.
 
     :param log_entries: List of log entries.
     :type log_entries: list[tuple[datetime, str, str]]
+    :param gtd_list: Name of GTD list for the first open task (eg. #gtd/action/now)
+    :type gtd_list: str
+    :param priority: Priority = icon (emoji) recognized by Obsidian Tasks plugin: ⏬ 🔽 🔼 ⏫
+    :type priority: str
     :return: Formatted log string.
     :rtype: str
     """
     log_content = ""
     task_status = " "
     for date, before, after in log_entries:
+        task_props = ""
+
         if not after:
             log_content += f"- [i] {date.strftime('%Y-%m-%d %H:%M')} - {before}\n"
         else:
-            log_content += f"- [{task_status}] {date.strftime('%Y-%m-%d %H:%M')} - {before} => {after}\n"
+            if gtd_list:
+                gtd_list = f" {gtd_list} "
+                task_props = f" | {priority}"
+            log_content += f"- [{task_status}] {date.strftime('%Y-%m-%d %H:%M')} -{gtd_list}{before} => {after}{task_props}\n"
             task_status = "x"
+            gtd_list = ""
     return log_content

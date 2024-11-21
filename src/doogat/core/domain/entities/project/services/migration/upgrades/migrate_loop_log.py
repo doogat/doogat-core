@@ -26,7 +26,11 @@ def migrate_loop_log(zettel_data: ZettelData) -> None:
     header, content = zettel_data.sections[0]
     log_entries, remaining_content = extract_log_entries(content)
     gtd_list, priority = determine_priority(zettel_data)
-    formatted_log = format_log_entries(log_entries, gtd_list, priority)
+    formatted_log = format_log_entries(
+        log_entries,
+        gtd_list=gtd_list,
+        priority=priority,
+    )
 
     zettel_data.sections[0] = (header, "\n".join(remaining_content))
     if formatted_log:

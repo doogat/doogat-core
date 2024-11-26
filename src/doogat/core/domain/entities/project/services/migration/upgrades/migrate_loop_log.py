@@ -93,7 +93,11 @@ def get_next_action_properties(zettel_data: ZettelData) -> NextAction:
 
     def process_metadata_key(key: str, target_date: str) -> tuple[str, str, str]:
         importance, action = key.split("-")
-        priority = PRIORITY_MAP[importance]
+
+        if PRIORITY_MAP.get(importance):
+            priority = PRIORITY_MAP[importance]
+        else:
+            return "","",""
 
         if action == "wait":
             gtd_list = "#gtd/wait"
@@ -112,7 +116,8 @@ def get_next_action_properties(zettel_data: ZettelData) -> NextAction:
     # Find the first matching metadata key
     for key, target_date in zettel_data.metadata.items():
         if "-" in key:
-            return NextAction(*process_metadata_key(key, target_date))
+            next_action = NextAction(*process_metadata_key(key, target_date))
+            return next_action
 
     # Default values if no matching metadata found
     return NextAction("#gtd/inbox", "🔼", "")

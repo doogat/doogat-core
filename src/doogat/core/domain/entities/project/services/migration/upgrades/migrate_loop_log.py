@@ -255,6 +255,8 @@ def format_log_entries(
                     task_props = f" | {priority} {dates}"
                 else:
                     task_props = f" | {priority}"
+            else:
+                gtd_list = " "
             log_content += f"- [{task_status}] {date.strftime('%Y-%m-%d %H:%M')} -{gtd_list}{before} => {after}{task_props}\n"
             task_status = "x"
             gtd_list = ""

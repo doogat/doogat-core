@@ -17,7 +17,7 @@ def set_default_completed(zettel_data: ZettelData) -> None:
     :return: None. The function modifies the `zettel_data` in place.
     """
     if not zettel_data.metadata.get("completed"):
-        zettel_data.metadata["commpleted"] = False
+        zettel_data.metadata["completed"] = False
 
         if (
             zettel_data.metadata.get("gtd-list")

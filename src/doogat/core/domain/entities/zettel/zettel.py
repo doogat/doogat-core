@@ -75,7 +75,7 @@ class Zettel:
     def _alias_attributes(self) -> None:
         """Alias the Zettel attributes."""
         for key, value in {**self._data.metadata, **self._data.reference}.items():
-            setattr(self, key, value)
+            setattr(self, key.replace("-", "_"), value)
 
     @property
     def id(self) -> int | None:

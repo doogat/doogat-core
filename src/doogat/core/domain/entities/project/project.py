@@ -71,3 +71,27 @@ class ProjectZettel(Zettel):
             (section[1] for section in self._data.sections if section[0] == "## Log"),
             "",
         )
+
+    def add_log_entry(self: "ProjectZettel", entry: str) -> None:
+        """
+        Add a new entry to the log section of the Zettel.
+
+        This method appends the provided entry to the log section of the Zettel's data.
+
+        :param entry: The new log entry to add.
+        :type entry: str
+        :return: None. The function modifies the internal state in place.
+        """
+        updated_sections = []
+        for section in self._data.sections:
+            title, content = section
+            if title == "## Log":
+                new_content = f"{entry.strip()}{content}"
+                updated_sections.append((title, new_content))
+            else:
+                updated_sections.append(section)
+        self._data.sections = [ sec for sec in updated_sections if sec[0] != "" ]
+        self._ensure_consistency()
+        self._migrate()
+        self._ensure_consistency()
+        self._alias_attributes()

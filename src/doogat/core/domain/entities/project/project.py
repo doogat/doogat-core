@@ -72,6 +72,22 @@ class ProjectZettel(Zettel):
             "",
         )
 
+    @property
+    def us(self: "ProjectZettel") -> str | None:
+        """
+        Retrieve user story from Zettel's data.
+
+        This property will return reference with key us if found.
+
+        :return: The content of reference field with us key.
+        :rtype: str | None
+        """
+        return self._data.reference.get("us", None)
+
+    @us.setter
+    def us(self: "ProjectZettel", value: str) -> None:
+        self._data.reference["us"] = value
+
     def add_log_entry(self: "ProjectZettel", entry: str) -> None:
         """
         Add a new entry to the log section of the Zettel.
@@ -90,7 +106,7 @@ class ProjectZettel(Zettel):
                 updated_sections.append((title, new_content))
             else:
                 updated_sections.append(section)
-        self._data.sections = [ sec for sec in updated_sections if sec[0] != "" ]
+        self._data.sections = [sec for sec in updated_sections if sec[0] != ""]
         self._ensure_consistency()
         self._migrate()
         self._ensure_consistency()

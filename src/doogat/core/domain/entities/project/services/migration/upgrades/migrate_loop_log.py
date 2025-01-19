@@ -97,7 +97,7 @@ def get_next_action_properties(zettel_data: ZettelData) -> NextAction:
         if PRIORITY_MAP.get(importance):
             priority = PRIORITY_MAP[importance]
         else:
-            return "","",""
+            return "", "", ""
 
         if action == "wait":
             gtd_list = "#gtd/wait"
@@ -240,7 +240,7 @@ def format_log_entries(
         dates = next_action.dates
     else:
         priority = "🔼"
-        gtd_list = "#gtd/action/now"
+        gtd_list = "#gtd/act/now"
         dates = ""
 
     for date, before, after in log_entries:
@@ -251,13 +251,14 @@ def format_log_entries(
         else:
             if gtd_list:
                 gtd_list = f" {gtd_list} "
-                if dates:
-                    task_props = f" | {priority} {dates}"
-                else:
-                    task_props = f" | {priority}"
             else:
                 gtd_list = " "
-            log_content += f"- [{task_status}] {date.strftime('%Y-%m-%d %H:%M')} -{gtd_list}{before} => {after}{task_props}\n"
+
+            if dates:
+                task_props = f" |{gtd_list}{priority} {dates}"
+            else:
+                task_props = f" |{gtd_list}{priority}"
+            log_content += f"- [{task_status}] {date.strftime('%Y-%m-%d %H:%M')} - {before} => {after}{task_props}\n"
             task_status = "x"
             gtd_list = ""
     return log_content

@@ -41,7 +41,7 @@ def test_format_log_entries():
     ]
     expected_output = (
         "- [i] 2024-01-01 12:00 - Entry without action\n"
-        "- [ ] 2024-01-02 13:00 - #gtd/action/now Entry with action => something to do | 🔼\n"
+        "- [ ] 2024-01-02 13:00 - Entry with action => something to do | #gtd/act/now 🔼\n"
     )
 
     result = format_log_entries(log_entries)

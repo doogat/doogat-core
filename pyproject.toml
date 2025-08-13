@@ -20,14 +20,11 @@ priority = "explicit"
 
 [tool.poetry.dependencies]
 python = "^3.12"
+buvis-pybase = {version = "0.1.5", source = "test-pypi"}
 
 [tool.ruff.lint]
 extend-select = ["B", "Q", "D"]
 ignore = ["D211", "D213"]
-
-[tool.poetry.dependencies.buvis-pybase]
-version = "0.1.5"
-source = "test-pypi"
 
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"

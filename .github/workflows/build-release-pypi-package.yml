@@ -1,5 +1,5 @@
 ---
-name: Build & maybe upload PyPI package
+name: Build & upload released PyPI package
 
 on:
   release:
@@ -23,6 +23,22 @@ jobs:
       - uses: hynek/build-and-inspect-python-package@v2
         with:
           attest-build-provenance-github: "true"
+
+  release-test-pypi:
+    name: Publish released package to test.pypi.org
+    environment: release-test-pypi
+    runs-on: ubuntu-latest
+    needs: build-package
+    steps:
+      - name: Download packages built by build-and-inspect-python-package
+        uses: actions/download-artifact@v5
+        with:
+          name: Packages
+          path: dist
+      - name: Upload package to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
 
   release-pypi:
     name: Publish released package to pypi.org

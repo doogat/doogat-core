@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "doogat-core"
-version = "0.1.5"
+version = "0.1.6-alpha.1"
 description = ""
 authors = [ "Tomáš Bouška <admin@doogat.com>",]
 license = "GNU GPLv3"
@@ -26,7 +26,7 @@ extend-select = [ "B", "Q", "D",]
 ignore = [ "D211", "D213",]
 
 [tool.poetry.dependencies.buvis-pybase]
-version = "^0.1.8"
+version = "^0.2.0"
 source = "test-pypi"
 
 [tool.ruff.lint.pydocstyle]

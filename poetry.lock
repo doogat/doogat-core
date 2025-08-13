@@ -29,14 +29,14 @@ dev = ["backports.zoneinfo ; python_version < \"3.9\"", "freezegun (>=1.0,<2.0)"
 
 [[package]]
 name = "buvis-pybase"
-version = "0.1.8"
+version = "0.2.0"
 description = "Foundation of BUVIS python projects"
 optional = false
 python-versions = ">=3.12,<3.14"
 groups = ["main"]
 files = [
-    {file = "buvis_pybase-0.1.8-py3-none-any.whl", hash = "sha256:e2b277c175e1a66a1444271eba413eeb31565360e27fd91915ca7a2cbbce6606"},
-    {file = "buvis_pybase-0.1.8.tar.gz", hash = "sha256:5b8e10ad4abd6adc175a97445e9602ecccdba17f651926cdcb6ac45fa87d0feb"},
+    {file = "buvis_pybase-0.2.0-py3-none-any.whl", hash = "sha256:8b5182a3ab835c8a7265316f85d05afaf3b1a19b9c0e818e34be281dcb6d226c"},
+    {file = "buvis_pybase-0.2.0.tar.gz", hash = "sha256:36adf3433d577adb6a45ddb58a14f5a0157a7e721f31928d683d3adc26ac67a4"},
 ]
 
 [package.dependencies]
@@ -48,7 +48,7 @@ pyyaml = "6.0.2"
 rake-nltk = "1.0.6"
 rich = "14.1.0"
 torch = "2.8.0"
-transformers = "4.55.1"
+transformers = "4.55.2"
 tzlocal = "5.3.1"
 xattr = {version = "1.2.0", markers = "sys_platform != \"win32\""}
 
@@ -1868,14 +1868,14 @@ telegram = ["requests"]
 
 [[package]]
 name = "transformers"
-version = "4.55.1"
+version = "4.55.2"
 description = "State-of-the-art Machine Learning for JAX, PyTorch and TensorFlow"
 optional = false
 python-versions = ">=3.9.0"
 groups = ["main"]
 files = [
-    {file = "transformers-4.55.1-py3-none-any.whl", hash = "sha256:9e936d9c106924579f509f63da66aa899401e2d1fb4a4f964a3c494476b5110f"},
-    {file = "transformers-4.55.1.tar.gz", hash = "sha256:0de83246bdc4abdff6475302cd2fbd19f1c9f7ae7c1d7ec580e06df2f0ae93aa"},
+    {file = "transformers-4.55.2-py3-none-any.whl", hash = "sha256:097e3c2e2c0c9681db3da9d748d8f9d6a724c644514673d0030e8c5a1109f1f1"},
+    {file = "transformers-4.55.2.tar.gz", hash = "sha256:a45ec60c03474fd67adbce5c434685051b7608b3f4f167c25aa6aeb1cad16d4f"},
 ]
 
 [package.dependencies]
@@ -2137,4 +2137,4 @@ test = ["pytest"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.14"
-content-hash = "c429d2de2199008247d6fecada3ebbc56db79237e64fcbad179fc429fd21ccc9"
+content-hash = "1ee7e23bbbda21973cf93dd5a544c2e681d7fa6e1bf37699b12fee20ad07720d"

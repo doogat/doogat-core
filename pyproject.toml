@@ -38,11 +38,11 @@ convention = "pep257"
 "**/{tests,docs,tools}/*" = ["D"]
 
 [tool.poetry.group.dev.dependencies]
-pre-commit = "3.8.0"
+pre-commit = "4.3.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "8.3.3"
+pytest = "8.4.1"
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "8.0.2"
-sphinx-rtd-theme = "3.0.0rc1"
+sphinx = "8.2.3"
+sphinx-rtd-theme = "3.0.2"

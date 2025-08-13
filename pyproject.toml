@@ -26,7 +26,7 @@ extend-select = [ "B", "Q", "D",]
 ignore = [ "D211", "D213",]
 
 [tool.poetry.dependencies.buvis-pybase]
-version = "^0.1.8"
+version = "^0.1.6"
 source = "test-pypi"
 
 [tool.ruff.lint.pydocstyle]

@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "doogat-core"
-version = "0.1.7"
+version = "0.2.0"
 description = ""
 authors = ["Tomáš Bouška <admin@doogat.com>"]
 license = "GNU GPLv3"
@@ -19,14 +19,14 @@ url = "https://test.pypi.org/simple/"
 priority = "explicit"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.12,<4.0"
 
 [tool.ruff.lint]
 extend-select = ["B", "Q", "D"]
 ignore = ["D211", "D213"]
 
 [tool.poetry.dependencies.buvis-pybase]
-version = "^0.2.0"
+version = "^0.0"
 source = "test-pypi"
 
 [tool.ruff.lint.pydocstyle]

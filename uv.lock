@@ -22,7 +22,7 @@ wheels = [
 
 [[package]]
 name = "buvis-pybase"
-version = "0.5.7"
+version = "0.7.3"
 source = { registry = "https://test.pypi.org/simple/" }
 dependencies = [
     { name = "inflection" },
@@ -37,9 +37,9 @@ dependencies = [
     { name = "tzlocal" },
     { name = "xattr", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://test-files.pythonhosted.org/packages/94/b6/c0ec5eb70927fc9cb82cbf0aa7bea3dd4ebb605d9a5ede71a62107c49cfd/buvis_pybase-0.5.7.tar.gz", hash = "sha256:55924f59ab6abd24a0aaa4052c8152aaafbd276601b03cb648e43010efb2cc9f", size = 25370, upload-time = "2025-12-23T13:25:09.048Z" }
+sdist = { url = "https://test-files.pythonhosted.org/packages/9b/25/08e420d807ddc5e60a394dbe1d6984a131b205b0327d9cda93a4b18beeda/buvis_pybase-0.7.3.tar.gz", hash = "sha256:4542497ff173d1d46e2e2c8b5c7451e7eb2c5672e7606da6c46caa57f8040139", size = 100063, upload-time = "2025-12-30T21:23:05.546Z" }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/20/bc/faafa5cacd455aecd3999706fcf91526fdfcd0c51b2d695729747d69d7d2/buvis_pybase-0.5.7-py3-none-any.whl", hash = "sha256:9c4f6c41c3edfd9a0198afaf7b8aa27d565e2a796571d2be9ea881f3f67225be", size = 27221, upload-time = "2025-12-23T13:25:07.59Z" },
+    { url = "https://test-files.pythonhosted.org/packages/1b/c6/92c4992baca9df99d53b4fa870e4a991d77dd29d62fdd64f7a2cb3bb51e7/buvis_pybase-0.7.3-py3-none-any.whl", hash = "sha256:09a231623f5b4261e20314846882ae2b2d2dede0d06908187ce7ce34fcef23cf", size = 29219, upload-time = "2025-12-30T21:23:03.624Z" },
 ]
 
 [[package]]
@@ -254,7 +254,7 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "buvis-pybase", specifier = ">=0.3.0,<1.0.0", index = "https://test.pypi.org/simple/" }]
+requires-dist = [{ name = "buvis-pybase", specifier = ">=0.7.3,<1.0.0", index = "https://test.pypi.org/simple/" }]
 
 [package.metadata.requires-dev]
 dev = [

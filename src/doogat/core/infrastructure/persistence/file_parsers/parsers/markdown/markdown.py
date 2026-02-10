@@ -19,6 +19,7 @@ class MarkdownZettelFileParser:
         reference, content = extract_reference(
             content,
         )
+
         zettel_raw_data.reference = normalize_dict_keys(reference) if reference else {}
 
         zettel_raw_data.sections = split_content_into_sections(

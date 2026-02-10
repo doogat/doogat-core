@@ -17,10 +17,12 @@ HEADING_REGEX = r"(#{1,6} .+?)\n"
 
 def extract_metadata(content: str) -> tuple:
     match = re.search(METADATA_SECTION_REGEX, content, re.DOTALL)
+
     if not match:
         return None, content
 
     front_matter = FMPreprocessor.preprocess(match.group(1))
+
     try:
         metadata = yaml.safe_load(front_matter) or {}
     except yaml.YAMLError as e:
@@ -28,18 +30,36 @@ def extract_metadata(content: str) -> tuple:
         raise ValueError(msg) from e
 
     content_without_front_matter = content.replace(match.group(0), "", 1)
+
     return metadata, content_without_front_matter
 
 
 def extract_reference(content: str) -> tuple:
     match = re.search(REFERENCE_SECTION_REGEX, content, re.DOTALL)
+
     if not match:
         return None, content
 
     raw_reference_content = match.group(1).strip()
     preprocessed_reference_content = BMPreprocessor.preprocess(raw_reference_content)
+
     try:
-        reference = yaml.safe_load(preprocessed_reference_content) or {}
+        reference_raw = yaml.safe_load(preprocessed_reference_content) or {}
+        reference = {}
+
+        for item in reference_raw:
+            for key, value in item.items():
+                key = key.rstrip(":")
+
+                if key not in reference:
+                    reference[key] = value
+                else:
+                    existing = reference[key]
+
+                    if isinstance(existing, list):
+                        existing.append(value)
+                    else:
+                        reference[key] = [existing, value]
     except yaml.YAMLError as e:
         msg = f"Failed to parse reference: {e}"
         raise ValueError(msg) from e
@@ -51,6 +71,7 @@ def extract_reference(content: str) -> tuple:
         flags=re.MULTILINE,
     )
     content_without_reference = content_without_reference.rstrip()
+
     return reference, content_without_reference
 
 
@@ -62,6 +83,8 @@ def normalize_dict_keys(data: dict) -> dict:
 
 def split_content_into_sections(content: str) -> list:
     sections = re.split(HEADING_REGEX, content)[1:]  # Skip the first empty element
+
     if not sections:
         return [("", content)]
+
     return [(sections[i], sections[i + 1]) for i in range(0, len(sections), 2)]

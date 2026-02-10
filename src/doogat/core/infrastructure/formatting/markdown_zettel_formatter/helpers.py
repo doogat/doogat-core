@@ -25,6 +25,7 @@ def process_metadata(metadata: dict, first_keys: tuple) -> dict:
     :return: Processed metadata dictionary with specified keys ordered first.
     :rtype: dict
     """
+
     return {
         **{key: metadata[key] for key in first_keys if key in metadata},
         **{k: v for k, v in sorted(metadata.items()) if k not in first_keys},
@@ -42,10 +43,12 @@ def convert_datetimes(full_metadata: dict) -> list:
     datetime_keys = [
         key for key in full_metadata if isinstance(full_metadata[key], datetime)
     ]
+
     for key in datetime_keys:
         full_metadata[key] = (
             full_metadata[key].astimezone().replace(microsecond=0).isoformat()
         )
+
     return datetime_keys
 
 
@@ -68,6 +71,7 @@ def metadata_to_yaml(full_metadata: dict, datetime_keys: list) -> str:
     datetime_regex = re.compile(
         rf"^({'|'.join(datetime_keys)}): '([^']*)'(.*)$", flags=re.MULTILINE
     )
+
     return datetime_regex.sub(r"\1: \2\3", metadata_str)
 
 
@@ -84,6 +88,7 @@ def format_metadata(metadata: dict, first_keys: tuple) -> str:
     full_metadata = process_metadata(metadata, first_keys)
     datetime_keys = convert_datetimes(full_metadata)
     metadata_str = metadata_to_yaml(full_metadata, datetime_keys)
+
     return metadata_str
 
 
@@ -95,12 +100,14 @@ def format_reference(reference: dict) -> str:
     :return: Formatted reference string.
     :rtype: str
     """
-    formatted_reference = ""
+    formatted_reference = "\n"
+
     for key, value in reference.items():
         if value:
-            formatted_reference += f"{key}:: {str(value).lstrip()}\n"
+            formatted_reference += f"- {key}:: {str(value).lstrip()}\n"
         else:
-            formatted_reference += f"{key}::\n"
+            formatted_reference += f"- {key}::\n"
+
     return formatted_reference.rstrip()
 
 
@@ -145,6 +152,7 @@ def format_sections(sections: list) -> str:
     :return: Formatted sections string.
     :rtype: str
     """
+
     return "\n".join(
         f"\n{heading}\n\n{convert_markdown_to_preserve_line_breaks(content.strip())}"
         if content.strip()

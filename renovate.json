@@ -3,5 +3,12 @@
   "extends": [
     "config:base"
   ],
-  "rangeStrategy": "bump"
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "matchPackageNames": ["python"],
+      "matchManagers": ["pep621"],
+      "enabled": false
+    }
+  ]
 }

@@ -278,7 +278,7 @@ dev = [
 ]
 docs = [
     { name = "sphinx", specifier = ">=9.1.0" },
-    { name = "sphinx-rtd-theme", specifier = ">=3.0.2" },
+    { name = "sphinx-rtd-theme", specifier = ">=3.1.0" },
 ]
 test = [
     { name = "pytest", specifier = ">=9.0.2" },

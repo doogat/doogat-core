@@ -13,7 +13,7 @@ requires-python = ">=3.12,<4.0"
 dependencies = ["buvis-pybase>=0.3.0,<1.0.0"]
 
 [dependency-groups]
-dev = ["pre-commit>=4.5.1", "tbump>=6.11.0", "toml>=0.10.2"]
+dev = ["pre-commit>=4.5.1", "python-semantic-release>=10.5.3,<11.0.0"]
 test = ["pytest>=9.0.2", "pytest-mock>=3.15.1"]
 docs = ["sphinx>=8.2.3", "sphinx-rtd-theme>=3.0.2"]
 
@@ -27,6 +27,41 @@ explicit = true
 
 [tool.uv.sources]
 buvis-pybase = { index = "test-pypi" }
+
+[tool.semantic_release]
+version_toml = ["pyproject.toml:project.version"]
+allow_zero_version = true
+major_on_zero = false
+commit_parser = "conventional"
+tag_format = "v{version}"
+commit_message = "chore(release): {version}"
+build_command = "uv build"
+
+[tool.semantic_release.branches.main]
+match = "master"
+prerelease = false
+
+[tool.semantic_release.commit_parser_options]
+minor_tags = ["feat"]
+patch_tags = ["fix", "perf"]
+ignore_merge_commits = true
+parse_squash_commits = false
+
+[tool.semantic_release.changelog]
+changelog_file = "CHANGELOG.md"
+exclude_commit_patterns = [
+    '''chore(?:\([^)]*\))?: .*''',
+    '''ci(?:\([^)]*\))?: .*''',
+    '''docs(?:\([^)]*\))?: .*''',
+    '''test(?:\([^)]*\))?: .*''',
+    '''build(?:\([^)]*\))?: .*''',
+    '''refactor(?:\([^)]*\))?: .*''',
+    '''style(?:\([^)]*\))?: .*''',
+]
+
+[tool.semantic_release.remote]
+type = "github"
+token = { env = "GH_TOKEN" }
 
 [tool.ruff.lint]
 extend-select = ["B", "Q", "D"]

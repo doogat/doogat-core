@@ -1,0 +1,5 @@
+[tools]
+gum = "latest"
+
+[env]
+_.path = ["./dev/bin"]

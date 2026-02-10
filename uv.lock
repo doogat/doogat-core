@@ -31,12 +31,15 @@ wheels = [
 
 [[package]]
 name = "buvis-pybase"
-version = "0.5.7"
+version = "0.9.0"
 source = { registry = "https://test.pypi.org/simple/" }
 dependencies = [
+    { name = "click" },
     { name = "inflection" },
     { name = "jira" },
     { name = "pexpect" },
+    { name = "pydantic" },
+    { name = "pydantic-settings" },
     { name = "pywin32", marker = "sys_platform == 'win32'" },
     { name = "pyyaml" },
     { name = "rake-nltk" },
@@ -46,9 +49,9 @@ dependencies = [
     { name = "tzlocal" },
     { name = "xattr", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://test-files.pythonhosted.org/packages/94/b6/c0ec5eb70927fc9cb82cbf0aa7bea3dd4ebb605d9a5ede71a62107c49cfd/buvis_pybase-0.5.7.tar.gz", hash = "sha256:55924f59ab6abd24a0aaa4052c8152aaafbd276601b03cb648e43010efb2cc9f", size = 25370, upload-time = "2025-12-23T13:25:09.048Z" }
+sdist = { url = "https://test-files.pythonhosted.org/packages/89/88/6b053d605c45dda214f5d5c6c5efc9483037731e5ff307ea335172c0c92b/buvis_pybase-0.9.0.tar.gz", hash = "sha256:ae8e1a1b6709314b2131c9cf0644537c58ee7c12c558814788c32188e8b084b2", size = 182757, upload-time = "2026-01-07T14:50:32.774Z" }
 wheels = [
-    { url = "https://test-files.pythonhosted.org/packages/20/bc/faafa5cacd455aecd3999706fcf91526fdfcd0c51b2d695729747d69d7d2/buvis_pybase-0.5.7-py3-none-any.whl", hash = "sha256:9c4f6c41c3edfd9a0198afaf7b8aa27d565e2a796571d2be9ea881f3f67225be", size = 27221, upload-time = "2025-12-23T13:25:07.59Z" },
+    { url = "https://test-files.pythonhosted.org/packages/9f/89/406a2b23322a74d51a955472884f02350a88ccb81a8b752606cdf0b0f9a7/buvis_pybase-0.9.0-py3-none-any.whl", hash = "sha256:6d0c77a55ac5b838b1e6fb5780139636d9bc2a1250737fe48cee075aaf71143a", size = 49760, upload-time = "2026-01-07T14:50:31.271Z" },
 ]
 
 [[package]]
@@ -266,7 +269,7 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "buvis-pybase", specifier = ">=0.3.0,<1.0.0", index = "https://test.pypi.org/simple/" }]
+requires-dist = [{ name = "buvis-pybase", specifier = ">=0.9.0,<1.0.0", index = "https://test.pypi.org/simple/" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -963,6 +966,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pydantic-settings"
+version = "2.12.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "typing-inspection" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/43/4b/ac7e0aae12027748076d72a8764ff1c9d82ca75a7a52622e67ed3f765c54/pydantic_settings-2.12.0.tar.gz", hash = "sha256:005538ef951e3c2a68e1c08b292b5f2e71490def8589d4221b95dab00dafcfd0", size = 194184, upload-time = "2025-11-10T14:25:47.013Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c1/60/5d4751ba3f4a40a6891f24eec885f51afd78d208498268c734e256fb13c4/pydantic_settings-2.12.0-py3-none-any.whl", hash = "sha256:fddb9fd99a5b18da837b29710391e945b1e30c135477f484084ee513adb93809", size = 51880, upload-time = "2025-11-10T14:25:45.546Z" },
+]
+
+[[package]]
 name = "pygments"
 version = "2.19.2"
 source = { registry = "https://pypi.org/simple" }
@@ -997,6 +1014,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/68/14/eb014d26be205d38ad5ad20d9a80f7d201472e08167f0bb4361e251084a9/pytest_mock-3.15.1.tar.gz", hash = "sha256:1849a238f6f396da19762269de72cb1814ab44416fa73a8686deac10b0d87a0f", size = 34036, upload-time = "2025-09-16T16:37:27.081Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/5a/cc/06253936f4a7fa2e0f48dfe6d851d9c56df896a9ab09ac019d70b760619c/pytest_mock-3.15.1-py3-none-any.whl", hash = "sha256:0a25e2eb88fe5168d535041d09a4529a188176ae608a6d249ee65abc0949630d", size = 10095, upload-time = "2025-09-16T16:37:25.734Z" },
+]
+
+[[package]]
+name = "python-dotenv"
+version = "1.2.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f0/26/19cadc79a718c5edbec86fd4919a6b6d3f681039a2f6d66d14be94e75fb9/python_dotenv-1.2.1.tar.gz", hash = "sha256:42667e897e16ab0d66954af0e60a9caa94f0fd4ecf3aaf6d2d260eec1aa36ad6", size = 44221, upload-time = "2025-10-26T15:12:10.434Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/14/1b/a298b06749107c305e1fe0f814c6c74aea7b2f1e10989cb30f544a1b3253/python_dotenv-1.2.1-py3-none-any.whl", hash = "sha256:b81ee9561e9ca4004139c6cbba3a238c32b03e4894671e181b671e8cb8425d61", size = 21230, upload-time = "2025-10-26T15:12:09.109Z" },
 ]
 
 [[package]]

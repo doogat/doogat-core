@@ -1,6 +1,8 @@
 [tools]
-python = "3.14"
+python = "3.12"
+uv = "latest"
 gum = "latest"
 
 [env]
 _.path = ["./dev/bin"]
+_.file = '.env'

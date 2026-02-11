@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pytest
+
 from doogat.core.infrastructure.formatting.markdown_zettel_formatter.helpers import (
     convert_datetimes,
     format_metadata,
@@ -26,9 +27,7 @@ def test_process_metadata(sample_metadata: dict):
     processed = process_metadata(sample_metadata, first_keys)
     # Check if first keys are indeed first in the returned dictionary
     first_in_result = list(processed.keys())[: len(first_keys)]
-    assert first_in_result == list(
-        first_keys
-    ), "First keys are not prioritized in the result"
+    assert first_in_result == list(first_keys), "First keys are not prioritized in the result"
 
 
 # Test converting datetime objects to strings
@@ -54,6 +53,4 @@ def test_format_metadata(sample_metadata: dict):
     formatted_yaml = format_metadata(sample_metadata, first_keys)
     # Basic checks to ensure it returns a string and contains key data
     assert isinstance(formatted_yaml, str), "Formatted metadata should be a string"
-    assert (
-        "John Doe" in formatted_yaml
-    ), "Metadata content missing in the formatted output"
+    assert "John Doe" in formatted_yaml, "Metadata content missing in the formatted output"

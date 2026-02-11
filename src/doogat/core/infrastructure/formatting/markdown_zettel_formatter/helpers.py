@@ -9,13 +9,19 @@ Imports:
     - yaml: Used to convert dictionaries to YAML formatted strings.
 """
 
+from __future__ import annotations
+
 import re
 from datetime import datetime
+from typing import Any
 
 import yaml
 
 
-def process_metadata(metadata: dict, first_keys: tuple) -> dict:
+def process_metadata(
+    metadata: dict[str, Any],
+    first_keys: tuple[str, ...],
+) -> dict[str, Any]:
     """Process and return the full metadata with required keys first, followed by others.
 
     :param metadata: The original metadata dictionary.
@@ -32,7 +38,7 @@ def process_metadata(metadata: dict, first_keys: tuple) -> dict:
     }
 
 
-def convert_datetimes(full_metadata: dict) -> list:
+def convert_datetimes(full_metadata: dict[str, Any]) -> list[str]:
     """Convert datetime objects to formatted strings and return keys that were converted.
 
     :param full_metadata: Metadata dictionary potentially containing datetime objects.
@@ -40,19 +46,18 @@ def convert_datetimes(full_metadata: dict) -> list:
     :return: List of keys for which the datetime values were converted.
     :rtype: list
     """
-    datetime_keys = [
-        key for key in full_metadata if isinstance(full_metadata[key], datetime)
-    ]
+    datetime_keys = [key for key in full_metadata if isinstance(full_metadata[key], datetime)]
 
     for key in datetime_keys:
-        full_metadata[key] = (
-            full_metadata[key].astimezone().replace(microsecond=0).isoformat()
-        )
+        full_metadata[key] = full_metadata[key].astimezone().replace(microsecond=0).isoformat()
 
     return datetime_keys
 
 
-def metadata_to_yaml(full_metadata: dict, datetime_keys: list) -> str:
+def metadata_to_yaml(
+    full_metadata: dict[str, Any],
+    datetime_keys: list[str],
+) -> str:
     """Convert metadata dictionary to a YAML-formatted string without quotes on datetime keys.
 
     :param full_metadata: Metadata dictionary with datetime objects converted to strings.
@@ -68,14 +73,12 @@ def metadata_to_yaml(full_metadata: dict, datetime_keys: list) -> str:
         sort_keys=False,
         allow_unicode=True,
     ).strip()
-    datetime_regex = re.compile(
-        rf"^({'|'.join(datetime_keys)}): '([^']*)'(.*)$", flags=re.MULTILINE
-    )
+    datetime_regex = re.compile(rf"^({'|'.join(datetime_keys)}): '([^']*)'(.*)$", flags=re.MULTILINE)
 
     return datetime_regex.sub(r"\1: \2\3", metadata_str)
 
 
-def format_metadata(metadata: dict, first_keys: tuple) -> str:
+def format_metadata(metadata: dict[str, Any], first_keys: tuple[str, ...]) -> str:
     """Format the metadata into a YAML string with specified keys ordered first and datetimes unquoted.
 
     :param metadata: The original metadata dictionary.
@@ -92,7 +95,7 @@ def format_metadata(metadata: dict, first_keys: tuple) -> str:
     return metadata_str
 
 
-def format_reference(reference: dict) -> str:
+def format_reference(reference: dict[str, Any]) -> str:
     """Format reference dictionary into a string with key-value pairs.
 
     :param reference: Dictionary containing reference data.
@@ -111,7 +114,7 @@ def format_reference(reference: dict) -> str:
     return formatted_reference.rstrip()
 
 
-def convert_markdown_to_preserve_line_breaks(text):
+def convert_markdown_to_preserve_line_breaks(text: str) -> str:
     r"""
     Convert multiline markdown text to preserve line breaks.
 
@@ -144,7 +147,7 @@ def convert_markdown_to_preserve_line_breaks(text):
     return "\n".join(converted_lines)  # Join the lines back into a single string
 
 
-def format_sections(sections: list) -> str:
+def format_sections(sections: list[tuple[str, str]]) -> str:
     """Format sections list into a string with headings and content.
 
     :param sections: List of tuples containing section headings and content.

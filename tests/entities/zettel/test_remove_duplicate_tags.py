@@ -1,4 +1,5 @@
 import pytest
+
 from doogat.core.domain.entities.zettel.services.consistency.fixers.remove_duplicate_tags import (
     remove_duplicate_tags,
 )
@@ -27,9 +28,7 @@ def test_remove_duplicate_tags_no_tags():
     """Test that the function handles cases with no tags gracefully."""
     zettel_data = ZettelData()
     remove_duplicate_tags(zettel_data)
-    assert (
-        "tags" not in zettel_data.metadata
-    ), "No tags key should be present if it was initially absent"
+    assert "tags" not in zettel_data.metadata, "No tags key should be present if it was initially absent"
 
 
 def test_remove_duplicate_tags_unique_tags():

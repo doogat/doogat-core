@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 import pytest
+
 from doogat.core.application.use_cases.read_doogat_use_case import ReadDoogatUseCase
 from doogat.core.domain.entities import Zettel
 from doogat.core.domain.interfaces.zettel_repository import ZettelRepository
@@ -39,9 +40,7 @@ def test_execute_success(mock_doogat_factory, read_doogat_use_case):
     result = read_doogat_use_case.execute("test_location")
 
     assert result == mock_zettel
-    read_doogat_use_case.repository.find_by_location.assert_called_once_with(
-        "test_location"
-    )
+    read_doogat_use_case.repository.find_by_location.assert_called_once_with("test_location")
     mock_doogat_factory.create.assert_called_once_with(mock_zettel)
 
 
@@ -51,6 +50,4 @@ def test_execute_not_found(read_doogat_use_case):
     with pytest.raises(ZettelRepositoryZettelNotFoundError):
         read_doogat_use_case.execute("non_existent_location")
 
-    read_doogat_use_case.repository.find_by_location.assert_called_once_with(
-        "non_existent_location"
-    )
+    read_doogat_use_case.repository.find_by_location.assert_called_once_with("non_existent_location")

@@ -2,7 +2,8 @@
 This module provides functionality to set default metadata types for ZettelData objects.
 
 Imports:
-    - :class:`ZettelData` from doogat.core.domain.value_objects.zettel_data module to represent the data structure for zettel metadata.
+    - :class:`ZettelData` from doogat.core.domain.value_objects.zettel_data module to represent the
+    data structure for zettel metadata.
 """
 
 from doogat.core.domain.value_objects.zettel_data import ZettelData

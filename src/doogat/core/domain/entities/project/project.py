@@ -1,5 +1,6 @@
 """
-This module defines the ProjectZettel class, which extends the functionality of the :class:`Zettel` class by integrating project-specific migration and consistency services.
+This module defines the ProjectZettel class, which extends the functionality of the :class:`Zettel`
+class by integrating project-specific migration and consistency services.
 
 The module imports necessary classes from the `doogat.core.domain.entities.project.services.consistency` and
 `doogat.core.domain.entities.project.services.migration` packages, specifically for handling the consistency
@@ -9,7 +10,8 @@ Classes:
     ProjectZettel: Represents a project-specific Zettel with additional methods for migration and consistency checks.
 
 Imports:
-    ProjectZettelConsistencyService: A service class from `project.services.consistency` used to ensure data consistency.
+    ProjectZettelConsistencyService: A service class from `project.services.consistency` used to ensure
+    data consistency.
     ProjectZettelMigrationService: A service class from `project.services.migration` used to handle data migration.
     Zettel: The base class for Zettel objects, extended by ProjectZettel to include project-specific functionality.
 """

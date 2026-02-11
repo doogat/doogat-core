@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 import re
+from typing import Any, cast
 
 import yaml
 from buvis.pybase.formatting import StringOperator
@@ -15,7 +18,7 @@ REFERENCE_SECTION_REGEX = r"\n---\n(.*)$"
 HEADING_REGEX = r"(#{1,6} .+?)\n"
 
 
-def extract_metadata(content: str) -> tuple:
+def extract_metadata(content: str) -> tuple[dict[str, Any] | None, str]:
     match = re.search(METADATA_SECTION_REGEX, content, re.DOTALL)
 
     if not match:
@@ -24,7 +27,7 @@ def extract_metadata(content: str) -> tuple:
     front_matter = FMPreprocessor.preprocess(match.group(1))
 
     try:
-        metadata = yaml.safe_load(front_matter) or {}
+        metadata = cast(dict[str, Any], yaml.safe_load(front_matter) or {})
     except yaml.YAMLError as e:
         msg = f"Failed to parse metadata: {e}"
         raise ValueError(msg) from e
@@ -34,7 +37,7 @@ def extract_metadata(content: str) -> tuple:
     return metadata, content_without_front_matter
 
 
-def extract_reference(content: str) -> tuple:
+def extract_reference(content: str) -> tuple[dict[str, Any] | None, str]:
     match = re.search(REFERENCE_SECTION_REGEX, content, re.DOTALL)
 
     if not match:
@@ -44,8 +47,11 @@ def extract_reference(content: str) -> tuple:
     preprocessed_reference_content = BMPreprocessor.preprocess(raw_reference_content)
 
     try:
-        reference_raw = yaml.safe_load(preprocessed_reference_content) or {}
-        reference = {}
+        reference_raw = cast(
+            list[dict[str, Any]],
+            yaml.safe_load(preprocessed_reference_content) or [],
+        )
+        reference: dict[str, Any] = {}
 
         for item in reference_raw:
             for key, value in item.items():
@@ -75,13 +81,11 @@ def extract_reference(content: str) -> tuple:
     return reference, content_without_reference
 
 
-def normalize_dict_keys(data: dict) -> dict:
-    return {
-        StringOperator.as_note_field_name(key): value for key, value in data.items()
-    }
+def normalize_dict_keys(data: dict[str, Any]) -> dict[str, Any]:
+    return {StringOperator.as_note_field_name(key): value for key, value in data.items()}
 
 
-def split_content_into_sections(content: str) -> list:
+def split_content_into_sections(content: str) -> list[tuple[str, str]]:
     sections = re.split(HEADING_REGEX, content)[1:]  # Skip the first empty element
 
     if not sections:

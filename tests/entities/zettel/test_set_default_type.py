@@ -16,9 +16,7 @@ def test_set_default_type():
     set_default_type(mock_zettel_data)
 
     # Assert that the metadata type is set correctly
-    assert (
-        mock_zettel_data.metadata["type"] == DEFAULT_TYPE
-    ), "The metadata type should be set to the default type"
+    assert mock_zettel_data.metadata["type"] == DEFAULT_TYPE, "The metadata type should be set to the default type"
 
 
 def test_set_default_type_preserves_other_metadata():
@@ -30,9 +28,5 @@ def test_set_default_type_preserves_other_metadata():
     set_default_type(mock_zettel_data)
 
     # Assert that the original metadata is preserved and the type is added
-    assert (
-        mock_zettel_data.metadata["author"] == "John Doe"
-    ), "The original metadata should be preserved"
-    assert (
-        mock_zettel_data.metadata["type"] == DEFAULT_TYPE
-    ), "The metadata type should be set to the default type"
+    assert mock_zettel_data.metadata["author"] == "John Doe", "The original metadata should be preserved"
+    assert mock_zettel_data.metadata["type"] == DEFAULT_TYPE, "The metadata type should be set to the default type"

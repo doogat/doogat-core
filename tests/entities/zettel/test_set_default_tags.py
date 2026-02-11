@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+
 from doogat.core.domain.entities.zettel.services.consistency.fixers.set_default_tags import (
     set_default_tags,
 )

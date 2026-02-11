@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+
 from doogat.core.application.use_cases.print_zettel_use_case import PrintZettelUseCase
 from doogat.core.domain.interfaces.zettel_formatter import ZettelFormatter
 from doogat.core.domain.value_objects.zettel_data import ZettelData

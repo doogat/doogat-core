@@ -6,7 +6,7 @@ Imports:
 - :class:`ZettelData`: A domain value object from the doogat.core.domain.value_objects package.
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
@@ -19,4 +19,4 @@ def set_default_date(zettel_data: ZettelData) -> None:
     :type zettel_data: :class:`ZettelData`
     :return: None. The function modifies the `zettel_data` in place.
     """
-    zettel_data.metadata["date"] = datetime.now(timezone.utc).replace(microsecond=0)
+    zettel_data.metadata["date"] = datetime.now(UTC).replace(microsecond=0)

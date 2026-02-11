@@ -2,11 +2,14 @@
 This module provides functionality to format the title of a ZettelData object.
 
 Imports:
-- :class:`StringOperator` from the `buvis.pybase.formatting` module, used for text manipulation.
-- :class:`ZettelData` from the `doogat.core.domain.value_objects.zettel_data` module, representing the data structure for zettel information.
+- :class:`StringOperator` from the `buvis.pybase.formatting` module, used for text
+  manipulation.
+- :class:`ZettelData` from the `doogat.core.domain.value_objects.zettel_data` module,
+  representing the data structure for zettel information.
 """
 
 from buvis.pybase.formatting import StringOperator
+
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
 

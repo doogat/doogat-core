@@ -5,6 +5,10 @@ Classes:
     - :class:`ZettelData`: Manages metadata, references, and content sections of a zettel.
 """
 
+from __future__ import annotations
+
+from typing import Any
+
 
 class ZettelData:
     """
@@ -13,19 +17,19 @@ class ZettelData:
     This class manages metadata, references, and content sections of a zettel.
     """
 
-    metadata: dict = {}
+    metadata: dict[str, Any] = {}  # noqa: RUF012
     """
     :var metadata: Stores metadata of the zettel.
     :type metadata: dict
     """
 
-    reference: dict = {}
+    reference: dict[str, Any] = {}  # noqa: RUF012
     """
     :var reference: Stores references linked to the zettel.
     :type reference: dict
     """
 
-    sections: list = []
+    sections: list[tuple[str, str]] = []  # noqa: RUF012
     """
     :var sections: Contains different sections of content in the zettel.
     :type sections: list

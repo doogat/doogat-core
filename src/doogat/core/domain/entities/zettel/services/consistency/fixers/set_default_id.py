@@ -6,7 +6,7 @@ Imports:
     - :class:`ZettelData` from doogat.core.domain.value_objects.zettel_data for data manipulation.
 """
 
-from datetime import timezone
+from datetime import UTC
 
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
@@ -21,11 +21,7 @@ def set_default_id(zettel_data: ZettelData) -> None:
     :raises ValueError: If the ID conversion fails or if the date isn't a date.
     """
     try:
-        id_str: str = (
-            zettel_data.metadata["date"]
-            .astimezone(timezone.utc)
-            .strftime("%Y%m%d%H%M%S")
-        )
+        id_str: str = zettel_data.metadata["date"].astimezone(UTC).strftime("%Y%m%d%H%M%S")
     except AttributeError as err:
         raise ValueError("Invalid date format") from err
 

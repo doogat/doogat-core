@@ -30,8 +30,7 @@ def fix_lists_bullets(zettel_data: ZettelData) -> None:
         (
             section[0],
             "\n".join(
-                f"- {line[2:].strip()}" if line.startswith("* ") else line.strip()
-                for line in section[1].split("\n")
+                f"- {line[2:].strip()}" if line.startswith("* ") else line.strip() for line in section[1].split("\n")
             ),
         )
         for section in zettel_data.sections

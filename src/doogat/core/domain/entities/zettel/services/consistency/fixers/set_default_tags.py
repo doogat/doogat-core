@@ -22,8 +22,6 @@ def set_default_tags(zettel_data: ZettelData) -> None:
     try:
         zettel_data.metadata["tags"] = []
     except AttributeError as err:
-        raise AttributeError(
-            "ZettelData object does not have a metadata attribute"
-        ) from err
+        raise AttributeError("ZettelData object does not have a metadata attribute") from err
     except TypeError as err:
         raise TypeError("ZettelData.metadata is not a mutable mapping") from err

@@ -2,10 +2,10 @@
 Test cases for the ZettelConsistencyService class.
 """
 
-from datetime import datetime, timezone
-from typing import Dict
+from datetime import UTC, datetime
 
 import pytest
+
 from doogat.core.domain.entities.zettel.services.consistency.zettel_consistency_service import (
     ZettelConsistencyService,
 )
@@ -28,9 +28,7 @@ def test_set_missing_defaults(zettel_data: ZettelData) -> None:
     """
     ZettelConsistencyService.set_missing_defaults(zettel_data)
 
-    assert zettel_data.metadata["date"] == datetime.now(timezone.utc).replace(
-        microsecond=0
-    )
+    assert zettel_data.metadata["date"] == datetime.now(UTC).replace(microsecond=0)
     assert zettel_data.metadata["id"] is not None
     assert zettel_data.metadata["title"] == "Unknown title"
     assert zettel_data.metadata["type"] == "note"
@@ -57,7 +55,7 @@ def test_ensure_consistency(zettel_data: ZettelData) -> None:
 @pytest.mark.parametrize(
     "metadata",
     [
-        {"date": datetime.now(timezone.utc).replace(microsecond=0)},
+        {"date": datetime.now(UTC).replace(microsecond=0)},
         {"id": "test-id"},
         {"title": "Test Title"},
         {"type": "article"},
@@ -66,9 +64,7 @@ def test_ensure_consistency(zettel_data: ZettelData) -> None:
         {"processed": True},
     ],
 )
-def test_set_missing_defaults_with_existing_metadata(
-    zettel_data: ZettelData, metadata: Dict[str, object]
-) -> None:
+def test_set_missing_defaults_with_existing_metadata(zettel_data: ZettelData, metadata: dict[str, object]) -> None:
     """
     Test that set_missing_defaults does not overwrite existing metadata values.
     """

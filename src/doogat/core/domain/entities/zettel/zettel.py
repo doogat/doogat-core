@@ -12,10 +12,8 @@ Imports:
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from datetime import datetime
+from datetime import datetime
+from typing import cast
 
 from doogat.core.domain.entities.zettel.services.consistency.zettel_consistency_service import (
     ZettelConsistencyService,
@@ -147,7 +145,7 @@ class Zettel:
         """
         if self._data.metadata.get("date") is None:
             return None
-        return self._data.metadata["date"]
+        return cast(datetime, self._data.metadata["date"])
 
     @date.setter
     def date(self, value: datetime) -> None:
@@ -198,7 +196,7 @@ class Zettel:
         """
         if self._data.metadata.get("tags") is None:
             return None
-        return self._data.metadata["tags"]
+        return cast(list[str], self._data.metadata["tags"])
 
     @tags.setter
     def tags(self, value: list[str] | str) -> None:
@@ -224,7 +222,7 @@ class Zettel:
         """
         if self._data.metadata.get("publish") is None:
             return False
-        return self._data.metadata["publish"]
+        return cast(bool, self._data.metadata["publish"])
 
     @publish.setter
     def publish(self, value: bool) -> None:
@@ -248,7 +246,7 @@ class Zettel:
         """
         if self._data.metadata.get("processed") is None:
             return False
-        return self._data.metadata["processed"]
+        return cast(bool, self._data.metadata["processed"])
 
     @processed.setter
     def processed(self, value: bool) -> None:

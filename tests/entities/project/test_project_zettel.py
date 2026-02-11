@@ -17,9 +17,10 @@ class TestProjectZettel:
             mock_super_init.assert_called_once()
 
     def test_migrate_calls_super_and_service(self):
-        with patch.object(Zettel, "_migrate") as mock_super_migrate, patch.object(
-            ProjectZettelMigrationService, "migrate"
-        ) as mock_migrate_service:
+        with (
+            patch.object(Zettel, "_migrate") as mock_super_migrate,
+            patch.object(ProjectZettelMigrationService, "migrate") as mock_migrate_service,
+        ):
             zettel = ProjectZettel()
             zettel._data = MagicMock()
             zettel._migrate()
@@ -27,11 +28,10 @@ class TestProjectZettel:
             mock_migrate_service.assert_called_once_with(zettel._data)
 
     def test_ensure_consistency_calls_super_and_service(self):
-        with patch.object(
-            Zettel, "_ensure_consistency"
-        ) as mock_super_consistency, patch.object(
-            ProjectZettelConsistencyService, "ensure_consistency"
-        ) as mock_consistency_service:
+        with (
+            patch.object(Zettel, "_ensure_consistency") as mock_super_consistency,
+            patch.object(ProjectZettelConsistencyService, "ensure_consistency") as mock_consistency_service,
+        ):
             zettel = ProjectZettel()
             zettel._data = MagicMock()
             zettel._ensure_consistency()

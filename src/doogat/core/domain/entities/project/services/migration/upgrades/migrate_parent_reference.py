@@ -23,7 +23,6 @@ def migrate_parent_reference(zettel_data: ZettelData) -> None:
     :return: None. The function modifies the `zettel_data` in place.
     """
     if zettel_data.reference.get("parent"):
-        parent_link = re.findall(r"\[\[(.*?)\]\]", zettel_data.reference["parent"])
         match = re.search(r"\[\[(.*?)\]\]", zettel_data.reference["parent"])
         parent_link = match.group(1) if match else None
         if parent_link:

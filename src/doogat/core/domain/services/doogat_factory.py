@@ -1,13 +1,19 @@
 """
-This module defines the DoogatFactory class which is responsible for creating instances of :class:`doogat_entities.Zettel`.
+This module defines the DoogatFactory class which is responsible for creating instances of
+:class:`doogat_entities.Zettel`.
 
 Imports:
     - :class:`doogat.core.domain.entities` for accessing Doogat entities.
     - :class:`buvis.pybase.formatting.StringOperator` for string operations.
 """
 
-import doogat.core.domain.entities as doogat_entities
+from __future__ import annotations
+
+from typing import cast
+
 from buvis.pybase.formatting import StringOperator
+
+import doogat.core.domain.entities as doogat_entities
 
 
 class DoogatFactory:
@@ -36,7 +42,10 @@ class DoogatFactory:
         class_name = StringOperator.camelize(zettel_type) + "Zettel"
 
         try:
-            entity_class = getattr(doogat_entities, class_name)
+            entity_class = cast(
+                type[doogat_entities.Zettel],
+                getattr(doogat_entities, class_name),
+            )
         except AttributeError:
             return zettel
         else:

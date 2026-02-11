@@ -51,6 +51,4 @@ def normalize_sections_order(zettel_data: ZettelData) -> None:
             other_sections.append((title, content))
 
     # Remove empty sections and add other sections
-    zettel_data.sections = [
-        sec for sec in reordered_sections if sec[0] != ""
-    ] + other_sections
+    zettel_data.sections = [sec for sec in reordered_sections if sec[0] != ""] + other_sections

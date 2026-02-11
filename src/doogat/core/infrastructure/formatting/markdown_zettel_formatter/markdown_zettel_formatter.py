@@ -4,8 +4,11 @@ This module defines the MarkdownZettelFormatter class which implements the :clas
 Imports:
     - :class:`ZettelFormatter` from doogat.core.domain.interfaces.zettel_formatter
     - :class:`ZettelData` from doogat.core.domain.value_objects.zettel_data
-    - Helper functions (format_metadata, format_reference, format_sections) from doogat.core.infrastructure.formatting.markdown_zettel_formatter.helpers
+    - Helper functions (format_metadata, format_reference, format_sections) from
+    doogat.core.infrastructure.formatting.markdown_zettel_formatter.helpers
 """
+
+from __future__ import annotations
 
 from doogat.core.domain.interfaces.zettel_formatter import ZettelFormatter
 from doogat.core.domain.value_objects.zettel_data import ZettelData
@@ -27,7 +30,15 @@ class MarkdownZettelFormatter(ZettelFormatter):
     :type TOP_KEYS: tuple
     """
 
-    TOP_KEYS: tuple = ("id", "title", "date", "type", "tags", "publish", "processed")
+    TOP_KEYS: tuple[str, ...] = (
+        "id",
+        "title",
+        "date",
+        "type",
+        "tags",
+        "publish",
+        "processed",
+    )
 
     @staticmethod
     def format(zettel_data: ZettelData) -> str:
@@ -46,6 +57,4 @@ class MarkdownZettelFormatter(ZettelFormatter):
         reference_str: str = format_reference(zettel_data.reference)
         sections_str: str = format_sections(zettel_data.sections)
 
-        return (
-            f"---\n{metadata_str}\n---\n{sections_str}\n\n---\n{reference_str}"
-        ).rstrip()
+        return (f"---\n{metadata_str}\n---\n{sections_str}\n\n---\n{reference_str}").rstrip()

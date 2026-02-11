@@ -10,10 +10,6 @@ def test_initialization():
 
 def test_empty_initial_values():
     zettel = ZettelData()
-    assert (
-        zettel.metadata == {}
-    ), "Metadata should be initialized to an empty dictionary"
-    assert (
-        zettel.reference == {}
-    ), "Reference should be initialized to an empty dictionary"
+    assert zettel.metadata == {}, "Metadata should be initialized to an empty dictionary"
+    assert zettel.reference == {}, "Reference should be initialized to an empty dictionary"
     assert zettel.sections == [], "Sections should be initialized to an empty list"

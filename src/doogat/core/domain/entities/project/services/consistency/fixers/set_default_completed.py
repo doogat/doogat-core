@@ -19,9 +19,6 @@ def set_default_completed(zettel_data: ZettelData) -> None:
     if not zettel_data.metadata.get("completed"):
         zettel_data.metadata["completed"] = False
 
-        if (
-            zettel_data.metadata.get("gtd-list")
-            and zettel_data.metadata["gtd-list"] == "completed"
-        ):
+        if zettel_data.metadata.get("gtd-list") and zettel_data.metadata["gtd-list"] == "completed":
             zettel_data.metadata["completed"] = True
             del zettel_data.metadata["gtd-list"]

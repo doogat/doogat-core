@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 
 
@@ -12,17 +14,12 @@ class ZettelParserMarkdownFrontMatterPreprocessor:
         pattern = r"^(?:tag|tags):(?!\n)\s*(.*)$"
 
         # Define a replacement function that processes the matched tags
-        def replace_tags(match: re.Match) -> str:
+        def replace_tags(match: re.Match[str]) -> str:
             # Extract the matched group (the tags part)
             tags_part = match.group(1)
 
             # Remove unsafe characters
-            tags_part = (
-                tags_part.replace("[", "")
-                .replace("]", "")
-                .replace(", ", " ")
-                .replace(",", " ")
-            )
+            tags_part = tags_part.replace("[", "").replace("]", "").replace(", ", " ").replace(",", " ")
 
             # Remove hashes and split tags into a list
             tags_list = [tag.replace("#", "") for tag in tags_part.split()]

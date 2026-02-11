@@ -1,19 +1,21 @@
 """
 This module defines the ZettelFileParser class and associated helper functions for parsing zettel files.
 
-It includes functionality to extract metadata from filenames and file content using specific patterns and external utilities.
+It includes functionality to extract metadata from filenames and file content using specific
+patterns and external utilities.
 """
 
 from __future__ import annotations
 
 import re
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from doogat.core.domain.value_objects.zettel_data import ZettelData
 from buvis.pybase.filesystem import FileMetadataReader
+
 from doogat.core.infrastructure.persistence.file_parsers.parsers.markdown.markdown import (
     MarkdownZettelFileParser,
 )
@@ -43,9 +45,7 @@ class ZettelFileParser:
         zettel_raw_data = MarkdownZettelFileParser.parse(content)
 
         zettel_raw_data.metadata.setdefault("date", _get_date_from_file(file_path))
-        zettel_raw_data.metadata.setdefault(
-            "title", _get_title_from_filename(file_path.stem)
-        )
+        zettel_raw_data.metadata.setdefault("title", _get_title_from_filename(file_path.stem))
 
         return zettel_raw_data
 
@@ -62,9 +62,7 @@ def _get_date_from_file(file_path: Path) -> datetime | None:
     if DATETIME_PATTERN.match(file_path.stem):
         for fmt in ("%Y%m%d%H%M%S", "%Y%m%d%H%M"):
             try:
-                return datetime.strptime(file_path.stem[: len(fmt)], fmt).replace(
-                    tzinfo=timezone.utc
-                )
+                return datetime.strptime(file_path.stem[: len(fmt)], fmt).replace(tzinfo=UTC)
             except ValueError:
                 pass
 

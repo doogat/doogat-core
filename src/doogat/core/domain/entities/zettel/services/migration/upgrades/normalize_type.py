@@ -2,7 +2,8 @@
 This module handles the normalization of zettel types based on predefined mappings.
 
 Imports:
-    - :class:`ZettelData` from `doogat.core.domain.value_objects.zettel_data` which is used to represent and manipulate zettel metadata.
+    - :class:`ZettelData` from `doogat.core.domain.value_objects.zettel_data` which is used to
+    represent and manipulate zettel metadata.
 """
 
 from doogat.core.domain.value_objects.zettel_data import ZettelData
@@ -18,7 +19,8 @@ def normalize_type(zettel_data: ZettelData) -> None:
     """
     Normalize the type of a zettel by mapping it to a new type if applicable.
 
-    This function checks the current type of the zettel and updates it to a new type based on predefined mappings. If no mapping is found, the type remains unchanged.
+    This function checks the current type of the zettel and updates it to a new type based on
+    predefined mappings. If no mapping is found, the type remains unchanged.
 
     :param zettel_data: The zettel data whose type is to be normalized.
     :type zettel_data: :class:`ZettelData`

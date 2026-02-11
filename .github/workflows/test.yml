@@ -19,4 +19,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: astral-sh/setup-uv@eac588ad8def6316056a12d4907a9d4d84ff7a3b # v7
       - run: uv sync --group test
-      - run: uv run pytest
+      - run: uv run pytest --cov --cov-report=term-missing
+      - name: Type check
+        run: uv run mypy src/

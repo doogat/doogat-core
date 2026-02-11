@@ -2,7 +2,8 @@
 This module provides functionality to manipulate metadata in :class:`ZettelData`.
 
 Imports:
-    - :class:`ZettelData` from `doogat.core.domain.value_objects.zettel_data`: Represents the data structure for Zettel metadata.
+    - :class:`ZettelData` from `doogat.core.domain.value_objects.zettel_data`: Represents the data
+    structure for Zettel metadata.
 """
 
 from doogat.core.domain.value_objects.zettel_data import ZettelData

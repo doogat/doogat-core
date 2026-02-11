@@ -1,5 +1,6 @@
 """
-This module provides the ProjectZettelMigrationService class which handles the migration of project zettel data using specific migration services.
+This module provides the ProjectZettelMigrationService class which handles the migration of project
+zettel data using specific migration services.
 
 Imports:
     - migrate_loop_log: A function from the migration services to handle loop log migrations.

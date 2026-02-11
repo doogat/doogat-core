@@ -1,7 +1,9 @@
 """
-This module provides functionality to migrate log entries from zettel metadata and sections into a structured log format.
+This module provides functionality to migrate log entries from zettel metadata and sections into a
+structured log format.
 
-It includes functions to parse log entries from text content and metadata and update the zettel data structure accordingly.
+It includes functions to parse log entries from text content and metadata and update the zettel data
+structure accordingly.
 """
 
 from __future__ import annotations
@@ -9,7 +11,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from datetime import datetime
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from doogat.core.domain.value_objects.zettel_data import ZettelData
@@ -71,9 +73,8 @@ def extract_log_entries(
             date_str, before, after = match.groups()
             date_obj = datetime.strptime(date_str, "%d.%m.%Y %H:%M").astimezone()
             matches.append((date_obj, before.strip(), after.strip() if after else ""))
-        else:
-            if line.strip():
-                unmatched_lines.append(line.strip())
+        elif line.strip():
+            unmatched_lines.append(line.strip())
 
     return matches, unmatched_lines
 
@@ -135,10 +136,10 @@ def create_dates_section(milestone: DateParseResult) -> str:
     if not milestone.date:
         return ""
 
-    if milestone.before == "" or milestone.before == "before":
+    if milestone.before in ("", "before"):
         return f"📅 {milestone.date.strftime('%Y-%m-%d')}"
 
-    if milestone.before == "start" or milestone.before == "after":
+    if milestone.before in ("start", "after"):
         return f"🛫 {milestone.date.strftime('%Y-%m-%d')}"
 
     if milestone.before == "on":
@@ -158,12 +159,7 @@ def determine_gtd_list_from_target_date(target_date: str) -> str:
     """
     next_action = parse_date_string(target_date)
 
-    if (
-        next_action.before == "now"
-        or next_action.before == "next"
-        or next_action.before == "someday"
-        or next_action.before == "later"
-    ):
+    if next_action.before in ("now", "next", "someday", "later"):
         return next_action.before
     return "now"
 
@@ -177,7 +173,7 @@ class DateParseResult:
     :param after: Text after the date (empty if no date)
     """
 
-    date: Optional[datetime]
+    date: datetime | None
     before: str
     after: str
 

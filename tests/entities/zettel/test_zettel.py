@@ -2,9 +2,10 @@
 Tests for the Zettel class.
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
+
 from doogat.core.domain.entities.zettel.zettel import Zettel
 from doogat.core.domain.value_objects.zettel_data import ZettelData
 
@@ -98,9 +99,9 @@ def test_date_property(zettel_data):
     assert zettel.date == new_date
 
     zettel.date = None
-    assert zettel.date.replace(hour=0, minute=0, second=0) == datetime.now().astimezone(
-        timezone.utc
-    ).replace(hour=0, minute=0, second=0, microsecond=0)
+    assert zettel.date.replace(hour=0, minute=0, second=0) == datetime.now().astimezone(UTC).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
 
 
 def test_type_property(zettel_data):

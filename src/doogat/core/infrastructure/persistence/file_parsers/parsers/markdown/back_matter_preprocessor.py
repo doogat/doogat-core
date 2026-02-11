@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import re
 
 
@@ -13,13 +15,10 @@ class ZettelParserMarkdownBackMatterPreprocessor:
     def fix_obsidian_dataview_keys(text: str) -> str:
         dataview_key_pattern = r"^(\S+)::"
 
-        def replace(match: re.Match) -> str:
+        def replace(match: re.Match[str]) -> str:
             return match.group(1) + ":"
 
-        corrected_lines = [
-            re.sub(dataview_key_pattern, replace, line, count=1)
-            for line in text.split("\n")
-        ]
+        corrected_lines = [re.sub(dataview_key_pattern, replace, line, count=1) for line in text.split("\n")]
         return "\n".join(corrected_lines)
 
     @staticmethod

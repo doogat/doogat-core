@@ -1,4 +1,5 @@
 import pytest
+
 from doogat.core.domain.entities.project.services.consistency.fixers.normalize_sections_order import (
     normalize_sections_order,
 )

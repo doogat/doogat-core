@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "doogat-core"
 version = "0.2.1"
-description = ""
+description = "Core domain library for the Doogat zettelkasten system"
 readme = "README.md"
 license = "GPL-3.0-only"
 authors = [{ name = "Tomáš Bouška", email = "admin@doogat.com" }]
@@ -14,7 +14,7 @@ dependencies = ["buvis-pybase>=0.9.0,<1.0.0"]
 
 [dependency-groups]
 dev = ["pre-commit>=4.5.1,<5", "python-semantic-release>=10.5.3,<11.0.0"]
-test = ["pytest>=9.0.2,<10", "pytest-mock>=3.15.1,<4", "pytest-cov>=7,<8"]
+test = ["pytest>=9.0.2,<10", "pytest-mock>=3.15.1,<4", "pytest-cov>=7,<8", "mypy>=1.15,<2", "types-PyYAML>=6,<7"]
 docs = ["sphinx>=9.1.0,<10", "sphinx-rtd-theme>=3.1.0,<4"]
 
 [tool.hatch.build.targets.wheel]
@@ -27,6 +27,31 @@ add-bounds = "major"
 name = "test-pypi"
 url = "https://test.pypi.org/simple/"
 explicit = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+strict_markers = true
+
+[tool.coverage.run]
+source = ["src"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+mypy_path = "src"
+namespace_packages = true
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = ["buvis.pybase.formatting", "buvis.pybase.filesystem", "buvis.pybase.formatting.*", "buvis.pybase.filesystem.*"]
+ignore_missing_imports = true
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
@@ -62,5 +87,36 @@ exclude_commit_patterns = [
 type = "github"
 token = { env = "GH_TOKEN" }
 
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "W",
+  "F",
+  "I",
+  "S",
+  "ANN",
+  "ARG",
+  "SLF",
+  "PLR",
+  "UP",
+  "RUF",
+]
+ignore = [
+  "ANN401",
+  "S105",
+  "S106",
+  "S108",
+  "S607",
+  "PLR0911",
+  "PLR0912",
+  "PLR0913",
+  "PLR2004",
+  "UP047",
+]
+
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S101", "ANN", "ARG", "SLF001", "PLR2004"]
+"tests/**/*.py" = ["S101", "ANN", "ARG", "SLF001", "PLR2004", "RUF059", "UP007"]

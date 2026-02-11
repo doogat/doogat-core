@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any
 
 from doogat.core.domain.entities.zettel.services.migration.zettel_migration_service import (
     ZettelMigrationService,
@@ -20,7 +20,7 @@ def test_migrate() -> None:
     ZettelMigrationService.migrate(zettel_data)
 
     # Assert
-    expected_data: Dict[str, Any] = {
+    expected_data: dict[str, Any] = {
         "id": "123",
         "tags": ["test_tag"],
         "type": "note",
@@ -38,7 +38,7 @@ def test_migrate_no_zkn_id() -> None:
     ZettelMigrationService.migrate(zettel_data)
 
     # Assert
-    expected_data: Dict[str, Any] = {
+    expected_data: dict[str, Any] = {
         "tags": ["test_tag"],
         "type": "note",
         "other_field": "value",
@@ -55,7 +55,7 @@ def test_migrate_no_tag() -> None:
     ZettelMigrationService.migrate(zettel_data)
 
     # Assert
-    expected_data: Dict[str, Any] = {
+    expected_data: dict[str, Any] = {
         "id": "123",
         "type": "note",
         "other_field": "value",

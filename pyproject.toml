@@ -28,9 +28,6 @@ name = "test-pypi"
 url = "https://test.pypi.org/simple/"
 explicit = true
 
-[tool.uv.sources]
-buvis-pybase = { index = "test-pypi" }
-
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
 allow_zero_version = true
